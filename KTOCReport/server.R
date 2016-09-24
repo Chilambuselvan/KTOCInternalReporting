@@ -143,4 +143,22 @@ shinyServer(function(input, output) {
       layout(xaxis=x,yaxis=list(title = "Count", titlefont = f,autotick=FALSE,tick0=1))%>%
       layout(title="Primary Metrics")
   })
+  ###############################################_Motion_Charts_###############
+  output$motionCharts <- renderGvis({
+   # VCResource$Number.of.Resource
+    
+    # Vcs= gather(VCsummary,platform,cnt,Mono_SL_model:ELine)
+    # Vcs=subset(Vcs,is.na(Vcs$cnt)==FALSE)
+    # Vcs=rename(Vcs,YearNo=Year)
+    #fr=data.frame(Fruits)
+    
+    # test=Vcs %>%
+    #   group_by(Year,Stream) %>%
+    #   summarise_each_(funs=funs("sum"), vars=c("Mono_SL_model:ELine"))
+  
+   m= gvisMotionChart(Vcs,"platform","YearNo")
+   plot(m)
+    str(VCResource)
+  })
+  
 })

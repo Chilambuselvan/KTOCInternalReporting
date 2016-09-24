@@ -14,10 +14,17 @@ library(DT)
 library(data.table)
 library(googleVis)
 library(XLConnect)
+library(tidyr)
+
 myvar=0
 if(myvar==1){
 
   setwd("F:/Analytics/KTOCInternalReporting/KTOCReport")
+  Res=loadWorkbook("Resource.xlsx")
+  VCResource = readWorksheet(Res, sheet = 1, header = TRUE)
+  VCOrderHist = readWorksheet(Res, sheet = 2, header = TRUE)
+  VCsummary=left_join(VCOrderHist,VCResource,by=c("Year"="Year"))
+  
   wb = loadWorkbook("KTOCteamReport.xls")
   KTOCTaskTracker = readWorksheet(wb, sheet = 1, header = TRUE)
   Pt = loadWorkbook("performanceTracker.xlsx")
@@ -66,6 +73,9 @@ shinyUI(fluidPage(title = "KTOC Analytics",
                     tabPanel(title = "Six Sigma Reporting",
                              plotlyOutput("Primarymetric"),
                              plotlyOutput("SecMetric")
+                    ),
+                    tabPanel(title = "Gvis",
+                             htmlOutput("motionCharts")
                     )
                   )
 )
